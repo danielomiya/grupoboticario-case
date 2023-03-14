@@ -10,8 +10,8 @@ import typing as t
 
 from airflow.decorators import dag, task
 from airflow.providers.google.common.hooks.base_google import GoogleBaseHook
-from airflow.utils import dates
 from shared.spotify_client import SpotifyClient
+from shared.utils import days_ago
 
 if t.TYPE_CHECKING:
     from pandas import DataFrame
@@ -57,7 +57,7 @@ default_args = {
 
 
 @dag(
-    start_date=dates.days_ago(1),
+    start_date=days_ago(1),
     schedule="@once",
     default_args=default_args,
     catchup=False,

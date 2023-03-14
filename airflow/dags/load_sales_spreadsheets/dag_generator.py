@@ -15,9 +15,9 @@ from airflow.providers.google.cloud.operators.dataproc import (
     DataprocDeleteClusterOperator,
     DataprocSubmitJobOperator,
 )
-from airflow.utils import dates
 from airflow.utils.trigger_rule import TriggerRule
 from shared import yaml
+from shared.utils import days_ago
 
 
 class SpreadsheetToExport:
@@ -91,7 +91,7 @@ default_args = {
 
 with DAG(
     dag_id="load_sales_spreadsheets",
-    start_date=dates.days_ago(1),
+    start_date=days_ago(1),
     schedule="@once",
     default_args=default_args,
     catchup=False,
