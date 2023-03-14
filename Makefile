@@ -9,5 +9,8 @@ prep-env:
 	@echo "AIRFLOW_UID=`id -u`" >> .env
 	@docker compose build
 
+test:
+	@cd airflow/dags && python -m pytest ..
+
 ci:
-	gsutil -m rsync -d -r resources gs://${GS_BUCKET}/resources
+	@gsutil -m rsync -d -r resources gs://${GS_BUCKET}/resources
