@@ -1,11 +1,3 @@
-- table_name: sales_base_2017
-  source: gs://{{ GS_BUCKET }}/resources/Base_2017.xlsx
-  format: excel
-
-- table_name: sales_base_2018
-  source: gs://{{ GS_BUCKET }}/resources/Base_2018.xlsx
-  format: excel
-
-- table_name: sales_base_2019
-  source: gs://{{ GS_BUCKET }}/resources/Base_2019.xlsx
+- table_name: sales_base
+  source: gs://{{ GS_BUCKET }}/resources/Base_{2017,2018,2019}.xlsx
   format: excel
