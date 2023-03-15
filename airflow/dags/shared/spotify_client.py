@@ -47,7 +47,6 @@ class SpotifyAuth(requests.auth.AuthBase):
             },
         )
         response.raise_for_status()
-        print(response.text)
         return response.json()
 
     def store_token(self, token_data: t.Dict[str, t.Any]) -> None:
@@ -99,3 +98,9 @@ class SpotifyClient:
         else:
             types = type.split(",")
             return {t: json[pluralize(t)]["items"] for t in types}
+
+    def __enter__(self) -> "SpotifyClient":
+        return self
+
+    def __exit__(self, *args) -> None:
+        self.session.close()
