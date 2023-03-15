@@ -50,8 +50,7 @@ CLUSTER_CONFIG = {
     },
 }
 
-with open(CURR_DIR / "config.yaml") as f:
-    spreadsheets = yaml.safe_load(f)
+spreadsheets = yaml.safe_load(CURR_DIR / "config.yaml")
 
 
 def create_job_template(

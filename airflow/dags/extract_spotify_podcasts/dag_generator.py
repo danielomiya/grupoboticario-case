@@ -4,6 +4,7 @@
 The present DAG extracts Spotify searches, transforms them and loads them into
 Google BigQuery.
 """
+
 import os
 import typing as t
 from pathlib import Path
