@@ -1,3 +1,10 @@
+"""
+### generate_analytical_tables
+
+The present DAG materializes the analytical tables given their dependencies,
+and the SQL scripts to produce them.
+"""
+
 import typing as t
 from pathlib import Path
 
@@ -31,6 +38,7 @@ with DAG(
     start_date=days_ago(1),
     schedule="@once",
     default_args=default_args,
+    doc_md=__doc__,
 ):
     dependency_sensors = {}
 
