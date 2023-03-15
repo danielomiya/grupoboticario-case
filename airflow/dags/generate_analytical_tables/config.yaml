@@ -1,0 +1,34 @@
+- table_name: sales_per_year_month
+  script: sales_per_year_month.sql
+  depends_on:
+    - staging.sales_base
+
+- table_name: sales_per_product_line_year_month
+  script: sales_per_product_line_year_month.sql
+  depends_on:
+    - staging.sales_base
+
+- table_name: sales_per_brand_year_month
+  script: sales_per_brand_year_month.sql
+  depends_on:
+    - staging.sales_base
+
+- table_name: sales_per_brand_product_line
+  script: sales_per_brand_product_line.sql
+  depends_on:
+    - staging.sales_base
+
+- table_name: head_data_hackers_shows
+  script: head_data_hackers_shows.sql
+  depends_on:
+    - staging.data_hackers_shows
+
+- table_name: all_data_hackers_episodes
+  script: all_data_hackers_episodes.sql
+  depends_on:
+    - staging.data_hackers_episodes
+
+- table_name: data_hackers_feat_gb_episodes
+  script: data_hackers_feat_gb_episodes.sql
+  depends_on:
+    - staging.data_hackers_episodes
