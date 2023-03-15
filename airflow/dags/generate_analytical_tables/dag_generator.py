@@ -56,6 +56,7 @@ with DAG(
                         "datasetId": "analytics",
                         "tableId": table["table_name"],
                     },
+                    "writeDisposition": "WRITE_TRUNCATE",
                     "useLegacySql": False,
                 },
             },
