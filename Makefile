@@ -9,6 +9,9 @@ prep-env:
 	@echo "AIRFLOW_UID=`id -u`" >> .env
 	@docker compose build
 
+up:
+	@docker compose up -d --build
+
 test:
 	@cd airflow/dags && python -m pytest ..
 
