@@ -17,3 +17,6 @@ test:
 
 ci:
 	@gsutil -m rsync -d -r resources gs://${GS_BUCKET}/resources
+
+import-connections:
+	@./airflow.sh connections import /opt/airflow/connections.yaml
