@@ -19,13 +19,6 @@ from airflow.utils.trigger_rule import TriggerRule
 from shared import yaml
 from shared.utils import days_ago
 
-
-class SpreadsheetToExport:
-    table_name: str
-    source: str
-    format: str
-
-
 GS_BUCKET = os.getenv("GS_BUCKET")
 GS_TMP_BUCKET = os.getenv("GS_TMP_BUCKET")
 CURR_DIR = Path(__file__).parent
@@ -62,7 +55,7 @@ with open(CURR_DIR / "config.yaml") as f:
 
 
 def create_job_template(
-    spreadsheet: SpreadsheetToExport,
+    spreadsheet: t.Dict[str, t.Any],
 ) -> t.Dict[str, t.Any]:
     return {
         "placement": {"cluster_name": CLUSTER_NAME},
@@ -83,7 +76,6 @@ def create_job_template(
 
 
 default_args = {
-    "owner": "airflow",
     "region": "us-central1",
     "gcp_conn_id": GCP_CONN_ID,
     "project_id": PROJECT_ID,
@@ -93,9 +85,9 @@ with DAG(
     dag_id="load_sales_spreadsheets",
     start_date=days_ago(1),
     schedule="@once",
-    default_args=default_args,
     catchup=False,
     max_active_runs=1,
+    default_args=default_args,
     doc_md=__doc__,
 ):
     create_cluster = DataprocCreateClusterOperator(
