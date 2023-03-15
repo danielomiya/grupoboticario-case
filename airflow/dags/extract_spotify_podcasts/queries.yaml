@@ -1,0 +1,9 @@
+- table_name: data_hackers_shows
+  query: data hackers
+  type: show
+  market: BR
+
+- table_name: data_hackers_episodes
+  query: data hackers
+  type: episode
+  market: BR
