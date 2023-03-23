@@ -25,15 +25,35 @@ if t.TYPE_CHECKING:
 def create_task_id_suffixer(
     suffix: str,
 ) -> t.Callable[["TaskDecorator"], "TaskDecorator"]:
-    def decorator(task: "TaskDecorator") -> "TaskDecorator":
+    """
+    Create a function that returns another which adds a suffix to the task_id
+
+    :param suffix: a string that will be added as a suffix to the task_id
+    :return: a higher-order function
+    """
+
+    def func(task: "TaskDecorator") -> "TaskDecorator":
+        """
+        A decorator function that adds a suffix to the given task's id
+
+        :param task: an instance of TaskDecorator to be modified
+        :return: the given task with the suffix appended to its id
+        """
         name = task.function.__name__ + suffix
         return task.override(task_id=name)
 
-    return decorator
+    return func
 
 
 @task(multiple_outputs=False)
 def extract_query(query: str, type: str) -> "DataFrame":
+    """
+    Extracts data based on a given query from the Spotify API
+
+    :param query: the search term to query for
+    :param type: the type of item to search for
+    :return: a DataFrame containing the search results
+    """
     import pandas as pd
 
     dfs: t.List[pd.DataFrame] = []
@@ -60,6 +80,12 @@ def extract_query(query: str, type: str) -> "DataFrame":
 
 @task(multiple_outputs=False)
 def transform_data(df: "DataFrame") -> "DataFrame":
+    """
+    Applies tranformations to a DataFrame before saving it
+
+    :param df: a DataFrame to be transformed
+    :return: a treated DataFrame
+    """
     complex_columns = [
         col
         for col in df.columns
@@ -74,6 +100,14 @@ def load_into_gbq(
     table_name: str,
     gcp_conn_id: str = "google_cloud_default",
 ) -> None:
+    """
+    Loads the contents of the DataFrame into a specified BigQuery dataset
+
+    :param df: a DataFrame to be loaded
+    :param table_name: the name of the BigQuery table to load the data into
+    :param gcp_conn_id: the connection to use when connecting to Google Cloud,
+                        defaults to "google_cloud_default"
+    """
     hook = GoogleBaseHook(gcp_conn_id)
     credentials, project_id = hook.get_credentials_and_project_id()
 
@@ -99,6 +133,9 @@ default_args = {
     doc_md=__doc__,
 )
 def extract_spotify_data():
+    """
+    Extract Spotify data, transform it and load it into Google BigQuery
+    """
     queries: t.List[t.Dict[str, t.Any]] = yaml.safe_load(
         Path(__file__).parent / "queries.yaml"
     )

@@ -56,6 +56,12 @@ spreadsheets = yaml.safe_load(CURR_DIR / "config.yaml")
 def create_job_template(
     spreadsheet: t.Dict[str, t.Any],
 ) -> t.Dict[str, t.Any]:
+    """
+    Creates a Dataproc job object using the provided configuration
+
+    :param spreadsheet: a dict of the spreadsheet to process
+    :return: a dictionary representing a Dataproc job object
+    """
     return {
         "placement": {"cluster_name": CLUSTER_NAME},
         "pyspark_job": {
