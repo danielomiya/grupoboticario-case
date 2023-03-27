@@ -12,6 +12,9 @@ prep-env:
 up:
 	@docker compose up -d --build
 
+down:
+	@docker compose down --volumes --rmi all
+
 test:
 	@cd airflow/dags && python -m pytest ..
 
